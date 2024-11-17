@@ -64,9 +64,20 @@ pub mod console {
 
     /// Write a slice of bytes to the console.
     pub fn write_bytes(bytes: &[u8]) {
+        // ANSI escape code for light blue text
+        putchar(b'\x1b');
+        putchar(b'[');
+        putchar(b'9');
+        putchar(b'4');
+        putchar(b'm');
         for c in bytes {
             putchar(*c);
         }
+        // Reset color
+        putchar(b'\x1b');
+        putchar(b'[');
+        putchar(b'0');
+        putchar(b'm');
     }
 }
 
