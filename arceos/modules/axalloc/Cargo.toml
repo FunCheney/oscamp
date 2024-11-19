@@ -15,6 +15,7 @@ tlsf = ["allocator/tlsf"]
 slab = ["allocator/slab"]
 buddy = ["allocator/buddy"]
 lab = ["lab_allocator"]
+bump = ["bump_allocator"]
 
 [dependencies]
 log = "0.4.21"
@@ -24,3 +25,4 @@ memory_addr = "0.3"
 axerrno = "0.1"
 allocator = { git = "https://github.com/arceos-org/allocator.git", tag ="v0.1.0", features = ["bitmap"] }
 lab_allocator = { path = "../../labs/lab_allocator", optional = true }
+bump_allocator = { path = "../bump_allocator", optional = true }

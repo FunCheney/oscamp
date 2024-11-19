@@ -30,9 +30,8 @@ alloc-lab = ["axalloc/lab"]
 paging = ["alloc", "axhal/paging", "axruntime/paging"]
 tls = ["alloc", "axhal/tls", "axruntime/tls", "axtask?/tls"]
 dma = ["alloc", "paging"]
-
 alt_alloc = ["alt_axalloc", "axruntime/alt_alloc"]
-
+alloc-bump = ["axalloc/bump"]
 # Multi-threading and scheduler
 multitask = ["alloc", "axtask/multitask", "axsync/multitask", "axruntime/multitask"]
 sched_fifo = ["axtask/sched_fifo"]
