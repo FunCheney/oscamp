@@ -85,7 +85,9 @@ pub fn init_scheduler_secondary() {
 #[cfg(feature = "irq")]
 #[doc(cfg(feature = "irq"))]
 pub fn on_timer_tick() {
+    // 当前事件列表
     crate::timers::check_events();
+    // runQueue 中调度器
     RUN_QUEUE.lock().scheduler_timer_tick();
 }
 
