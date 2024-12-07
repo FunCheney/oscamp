@@ -273,6 +273,7 @@ fn do_exit(_args: &str) {
 }
 
 pub fn run_cmd(line: &[u8]) {
+    print!("run_cmd {}", String::from_utf8_lossy(line));
     let line_str = unsafe { core::str::from_utf8_unchecked(line) };
     let (cmd, args) = split_whitespace(line_str);
     if !cmd.is_empty() {

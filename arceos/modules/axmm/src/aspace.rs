@@ -16,8 +16,11 @@ use alloc::vec::Vec;
 
 /// The virtual memory address space.
 pub struct AddrSpace {
+    /// 范围，可见的可以操作的范围
     va_range: VirtAddrRange,
+    /// 区域列表
     areas: MemorySet<Backend>,
+    /// 页表引用
     pt: PageTable,
 }
 

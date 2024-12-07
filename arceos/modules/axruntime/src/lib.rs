@@ -124,13 +124,14 @@ pub extern "C" fn rust_main(cpu_id: usize, dtb: usize) -> ! {
         "Boot at {}\n",
         chrono::DateTime::from_timestamp_nanos(axhal::time::wall_time_nanos() as _),
     );
-
+    // 初始化日志
     axlog::init();
     axlog::set_max_level(option_env!("AX_LOG").unwrap_or("")); // no effect if set `log-level-*` features
     info!("Logging is enabled.");
     info!("Primary CPU {} started, dtb = {:#x}.", cpu_id, dtb);
 
     info!("Found physcial memory regions:");
+    // 显示kernel 的各个段 范围 和属性
     for r in axhal::mem::memory_regions() {
         info!(
             "  [{:x?}, {:x?}) {} ({:?})",
@@ -141,6 +142,7 @@ pub extern "C" fn rust_main(cpu_id: usize, dtb: usize) -> ! {
         );
     }
 
+    // 初始化 Rust 的全局内存分配器
     #[cfg(any(feature = "alloc", feature = "alt_alloc"))]
     init_allocator();
 
@@ -151,17 +153,21 @@ pub extern "C" fn rust_main(cpu_id: usize, dtb: usize) -> ! {
     axhal::platform_init();
 
     #[cfg(feature = "multitask")]
+    // 调取器初始化
     axtask::init_scheduler();
 
     #[cfg(any(feature = "fs", feature = "net", feature = "display"))]
     {
         #[allow(unused_variables)]
+        // 设备与驱动初始化
         let all_devices = axdriver::init_drivers();
 
         #[cfg(feature = "fs")]
+        // 初始化文件系统
         axfs::init_filesystems(all_devices.block);
 
         #[cfg(feature = "net")]
+        // 初始化网络
         axnet::init_network(all_devices.net);
 
         #[cfg(feature = "display")]
@@ -190,6 +196,7 @@ pub extern "C" fn rust_main(cpu_id: usize, dtb: usize) -> ! {
         core::hint::spin_loop();
     }
 
+    // 进入应用的 main 函数
     unsafe { main() };
 
     #[cfg(feature = "multitask")]
