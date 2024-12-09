@@ -72,9 +72,11 @@ pub unsafe fn set_current_task_ptr<T>(ptr: *const T) {
         aarch64_cpu::registers::SP_EL0.set(ptr as u64)
     }
 }
+use crate::console::putchar;
 
 #[allow(dead_code)]
 pub(crate) fn init_primary(cpu_id: usize) {
+    putchar(66);
     percpu::init(axconfig::SMP);
     percpu::set_local_thread_pointer(cpu_id);
     unsafe {

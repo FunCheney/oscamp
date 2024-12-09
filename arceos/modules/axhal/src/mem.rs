@@ -139,9 +139,12 @@ pub(crate) fn default_free_regions() -> impl Iterator<Item = MemRegion> {
     })
 }
 
+use crate::console::putchar;
+
 /// Fills the `.bss` section with zeros.
 #[allow(dead_code)]
 pub(crate) fn clear_bss() {
+    putchar(65);
     unsafe {
         core::slice::from_raw_parts_mut(_sbss as usize as *mut u8, _ebss as usize - _sbss as usize)
             .fill(0);

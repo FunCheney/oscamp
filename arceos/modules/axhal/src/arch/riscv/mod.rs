@@ -82,9 +82,12 @@ pub fn flush_tlb(vaddr: Option<VirtAddr>) {
     }
 }
 
+use crate::console::putchar;
+
 /// Writes Supervisor Trap Vector Base Address Register (`stvec`).
 #[inline]
 pub fn set_trap_vector_base(stvec: usize) {
+    putchar(67);
     unsafe { stvec::write(stvec, stvec::TrapMode::Direct) }
 }
 
