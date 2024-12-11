@@ -18,6 +18,8 @@ cfg_display! {
 
 mod stdio {
     use core::fmt;
+    use axhal::console::putchar;
+    use axlog::info;
 
     pub fn ax_console_read_byte() -> Option<u8> {
         axhal::console::getchar().map(|c| if c == b'\r' { b'\n' } else { c })

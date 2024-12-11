@@ -146,6 +146,7 @@ pub extern "C" fn rust_main(cpu_id: usize, dtb: usize) -> ! {
     #[cfg(any(feature = "alloc", feature = "alt_alloc"))]
     init_allocator();
 
+    // 通过 paging 启动重建完整的空间映射
     #[cfg(feature = "paging")]
     axmm::init_memory_management();
 

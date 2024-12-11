@@ -17,6 +17,7 @@ unsafe fn init_boot_page_table() {
 
 unsafe fn init_mmu() {
     let page_table_root = BOOT_PT_SV39.as_ptr() as usize;
+    // 设置 satp 寄存器的模式和根页表的地址
     satp::set(satp::Mode::Sv39, 0, page_table_root >> 12);
     riscv::asm::sfence_vma_all();
 }
